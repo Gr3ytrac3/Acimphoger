@@ -53,15 +53,5 @@ Password Length: 20
 ✔ All passwords saved to /your/path/acimphoger_passwords.txt
 ```
 
----
-
-## 📌 Future Plans
-
-- 🔐 Optional encryption of saved passwords
-- 📊 Export options: JSON / CSV
-- 🖼️ Visual version with TUI or GUI
-
----
 
 © 2025 Acimphoger | Crafted by Cyberdev
-```
