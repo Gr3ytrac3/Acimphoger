@@ -20,4 +20,48 @@
 - Dependencies:
 ```bash
 pip install -r requirements.txt
+```
 
+---
+
+## 🚀 How to Use
+
+1. Clone this repository
+
+ `git clone https://github.com/Gr3ytrac3/Acimphoger.git`
+
+2. Open your terminal and run:
+
+```bash
+python3 acimphoger.py
+```
+3. Follow the prompts:
+   - Enter identity data
+   - Specify password count and length
+   - Define a save path
+
+---
+
+## 📂 Sample Output
+
+```
+Nickname: cy_artisan
+Fake Identity: dev_ghost
+Number of Passwords: 7
+Password Length: 20
+
+✔ All passwords saved to /your/path/acimphoger_passwords.txt
+```
+
+---
+
+## 📌 Future Plans
+
+- 🔐 Optional encryption of saved passwords
+- 📊 Export options: JSON / CSV
+- 🖼️ Visual version with TUI or GUI
+
+---
+
+© 2025 Acimphoger | Crafted by Cyberdev
+```
