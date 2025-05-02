@@ -27,8 +27,10 @@ pip install -r requirements.txt
 ## 🚀 How to Use
 
 1. Clone this repository
+```
+ git clone https://github.com/Gr3ytrac3/Acimphoger.git
 
- `git clone https://github.com/Gr3ytrac3/Acimphoger.git`
+ ```
 
 2. Open your terminal and run:
 
