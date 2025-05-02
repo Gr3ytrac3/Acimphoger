@@ -70,19 +70,20 @@ def generate_password(length):
 def password_strength(password):
     score = 0
 
-    # Criteria-based scoring
     if any(c.islower() for c in password):
-        score += 1
+        score += 2
     if any(c.isupper() for c in password):
-        score += 1
+        score += 2
     if any(c.isdigit() for c in password):
-        score += 1
+        score += 2
     if any(c in "@#$%^&*()_+-={}[]|;'<>,./~" for c in password):
+        score += 2
+    if len(password) >= 12:
         score += 1
     if len(password) >= 18:
-        score += 1  # Reward strong length
+        score += 1 
 
-    # Strength classification based on actual possible score (0–25)
+    # Final classification
     if score <= 5:
         return "Weak"
     elif score == 7:
