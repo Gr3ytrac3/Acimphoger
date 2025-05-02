@@ -17,12 +17,6 @@
 ## 🛠️ Requirements
 
 - Python 3.7+
-- Dependencies:
-```bash
-pip install -r requirements.txt
-```
-
----
 
 ## 🚀 How to Use
 
