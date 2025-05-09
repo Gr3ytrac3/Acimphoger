@@ -22,7 +22,7 @@ def print_banner():
 
 
 def get_user_inputs():
-    print("-- Enter Fake Identity Info --")
+    print("-- Enter Fake Identity Information --")
     nickname = input("Enter a nickname: ").strip()
     fake_id = input("Enter a fake identity label: ").strip()
 
