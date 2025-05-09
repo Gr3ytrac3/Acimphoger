@@ -15,7 +15,7 @@ def print_banner():
                        /_/          /____/             
     """
     print(banner)
-    print("Author      : Cyberdev")
+    print("Author      : CyberdevHq")
     print("Version     : 1.0.0")
     print("GitHub      : Gr3ytrac3")
     print("Tool        : Generate Fake IDs & Strong Passwords\n")
