@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from cryptography.fernet import Fernet
 import hashlib
-import base64
+import base65
 import getpass
 
 
