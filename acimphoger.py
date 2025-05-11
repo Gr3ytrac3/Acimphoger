@@ -4,10 +4,12 @@ import string
 import sys
 from pathlib import Path
 from cryptography.fernet import Fernet
+import hashlib
+import base64
 import getpass
 
 
-
+# --- Banner Display ---
 def print_banner():
     banner = r"""
      ___      _           __                            
@@ -19,11 +21,12 @@ def print_banner():
     """
     print(banner)
     print("Author      : Cyberdev")
-    print("Version     : 1.0.0")
+    print("Version     : 1.1.0")
     print("GitHub      : Gr3ytrac3")
     print("Tool        : Generate Fake IDs & Strong Passwords\n")
 
 
+# --- User Input Collection ---
 def get_user_inputs():
     print("-- Enter Fake Identity Information --")
     nickname = input("Enter a nickname: ").strip()
@@ -53,6 +56,7 @@ def get_user_inputs():
     return nickname, fake_id, count, length, save_path
 
 
+# --- Password Generator ---
 def generate_password(length):
     if length < 4:
         raise ValueError("Password length too short for all character types")
@@ -64,15 +68,14 @@ def generate_password(length):
         random.choice(string.digits),
         random.choice("@#$%^&*()_+-={}[]|;'<>,./~")
     ]
-
     password += [random.choice(all_chars) for _ in range(length - 4)]
     random.shuffle(password)
     return ''.join(password)
 
 
+# --- Password Strength Scoring ---
 def password_strength(password):
     score = 0
-
     if any(c.islower() for c in password):
         score += 2
     if any(c.isupper() for c in password):
@@ -84,9 +87,8 @@ def password_strength(password):
     if len(password) >= 12:
         score += 1
     if len(password) >= 18:
-        score += 1 
+        score += 1
 
-    # Final classification
     if score <= 5:
         return "Weak"
     elif score == 7:
@@ -97,6 +99,7 @@ def password_strength(password):
         return "Very Strong"
 
 
+# --- Save Passwords to File ---
 def save_passwords(nickname, fake_id, passwords, path):
     Path(path).mkdir(parents=True, exist_ok=True)
     file_path = Path(path) / f"{nickname}_{fake_id}_passwords.txt"
@@ -106,14 +109,44 @@ def save_passwords(nickname, fake_id, passwords, path):
             f.write(f"{i}. {pwd} \t[{password_strength(pwd)}]\n")
 
     print(f"\n[+] Passwords saved to {file_path}\n")
+    return file_path
 
 
+# --- Derive Fernet Key from User Passphrase ---
+def derive_key(password: str) -> bytes:
+    # SHA-256 hash then base64 encode for Fernet's expected format
+    return base64.urlsafe_b64encode(hashlib.sha256(password.encode()).digest())
+
+
+# --- Encrypt the Password File ---
+def encrypt_file(file_path: Path, key: bytes):
+    with open(file_path, "rb") as f:
+        data = f.read()
+
+    fernet = Fernet(key)
+    encrypted = fernet.encrypt(data)
+
+    encrypted_path = file_path.with_suffix(file_path.suffix + ".enc")
+    with open(encrypted_path, "wb") as f:
+        f.write(encrypted)
+
+    print(f"[+] Encrypted file saved to {encrypted_path}")
+
+
+# --- Main Controller ---
 def main():
     print_banner()
     nickname, fake_id, count, length, save_path = get_user_inputs()
-
     passwords = [generate_password(length) for _ in range(count)]
-    save_passwords(nickname, fake_id, passwords, save_path)
+
+    file_path = save_passwords(nickname, fake_id, passwords, save_path)
+
+    # Prompt for encryption
+    choice = input("Do you want to encrypt the saved password file? (y/n): ").lower()
+    if choice == "y":
+        passphrase = getpass.getpass("Enter encryption passphrase: ")
+        key = derive_key(passphrase)
+        encrypt_file(file_path, key)
 
 
 if __name__ == "__main__":
