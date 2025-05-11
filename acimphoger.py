@@ -3,6 +3,9 @@ import random
 import string
 import sys
 from pathlib import Path
+from cryptography.fernet import Fernet
+import getpass
+
 
 
 def print_banner():
